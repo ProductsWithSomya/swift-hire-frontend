@@ -143,7 +143,7 @@ const PostJob = () => {
                   <Label htmlFor="remote">Remote work available</Label>
                 </div>
               </div>
-            </div>
+            </Card>
 
             {/* Job Details */}
             <Card className="p-6">
