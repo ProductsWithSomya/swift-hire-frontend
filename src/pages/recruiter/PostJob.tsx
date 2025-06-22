@@ -6,6 +6,7 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Card } from '@/components/ui/card';
 import { Switch } from '@/components/ui/switch';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { ArrowLeft, Plus, X } from 'lucide-react';
 import Header from '@/components/layout/Header';
 import { Link } from 'react-router-dom';
@@ -27,11 +28,18 @@ const PostJob = () => {
   
   const [currentSkill, setCurrentSkill] = useState('');
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value, type } = e.target;
     setFormData(prev => ({
       ...prev,
       [name]: type === 'checkbox' ? (e.target as HTMLInputElement).checked : value
+    }));
+  };
+
+  const handleSelectChange = (name: string) => (value: string) => {
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
     }));
   };
 
@@ -151,35 +159,33 @@ const PostJob = () => {
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                 <div className="space-y-2">
-                  <Label htmlFor="jobType">Job Type</Label>
-                  <select
-                    id="jobType"
-                    name="jobType"
-                    value={formData.jobType}
-                    onChange={handleInputChange}
-                    className="w-full h-12 px-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
-                  >
-                    <option value="full-time">Full-time</option>
-                    <option value="part-time">Part-time</option>
-                    <option value="contract">Contract</option>
-                    <option value="internship">Internship</option>
-                  </select>
+                  <Label>Job Type</Label>
+                  <Select value={formData.jobType} onValueChange={handleSelectChange('jobType')}>
+                    <SelectTrigger className="h-12">
+                      <SelectValue placeholder="Select job type" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="full-time">Full-time</SelectItem>
+                      <SelectItem value="part-time">Part-time</SelectItem>
+                      <SelectItem value="contract">Contract</SelectItem>
+                      <SelectItem value="internship">Internship</SelectItem>
+                    </SelectContent>
+                  </Select>
                 </div>
                 
                 <div className="space-y-2">
-                  <Label htmlFor="experience">Experience Level</Label>
-                  <select
-                    id="experience"
-                    name="experience"
-                    value={formData.experience}
-                    onChange={handleInputChange}
-                    className="w-full h-12 px-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
-                  >
-                    <option value="entry-level">Entry Level</option>
-                    <option value="mid-level">Mid Level</option>
-                    <option value="senior-level">Senior Level</option>
-                    <option value="executive">Executive</option>
-                  </select>
+                  <Label>Experience Level</Label>
+                  <Select value={formData.experience} onValueChange={handleSelectChange('experience')}>
+                    <SelectTrigger className="h-12">
+                      <SelectValue placeholder="Select experience level" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="entry-level">Entry Level</SelectItem>
+                      <SelectItem value="mid-level">Mid Level</SelectItem>
+                      <SelectItem value="senior-level">Senior Level</SelectItem>
+                      <SelectItem value="executive">Executive</SelectItem>
+                    </SelectContent>
+                  </Select>
                 </div>
               </div>
 
